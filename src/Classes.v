@@ -1,12 +1,6 @@
 From Coq Require Export RelationClasses.
-From Coq Require Import ProofIrrelevance.
-
-Class EqualDec A :=
-  equal : forall x y : A, { x = y } + { x <> y }.
-
-Module EqualDecNotation.
-  Infix "==" := (equal) (no associativity, at level 70).
-End EqualDecNotation.
+From Classes Require Export EqualDec.
+From Classes Require Export Default.
 
 Ltac RelInstance_t :=
   intros;
@@ -14,8 +8,6 @@ Ltac RelInstance_t :=
   let symm := try solve [ hnf; intros; try symmetry; eauto ] in
   let trans := try solve [ hnf; intros; etransitivity; eauto ] in
   try match goal with
-      | |- EqualDec _ =>
-        hnf; decide equality
       | |- Reflexive _ =>
         hnf; intros; refl
       | |- Symmetric _ =>
@@ -29,38 +21,3 @@ Ltac RelInstance_t :=
       end.
 
 Notation RelInstance := (ltac:(RelInstance_t)) (only parsing).
-
-(* For unit, an explicit definition has better computational behavior.
-Specifically it is syntactically a [left], so any matches on [u == u']
-automatically reduce to the true case; [decide equality] would first destruct
-the arguments before producing [left]. *)
-Instance unit_equal_dec : EqualDec unit :=
-  fun x y => left (match x, y with
-                | tt, tt => eq_refl
-                end).
-
-Instance nat_equal_dec : EqualDec nat := RelInstance.
-Instance bool_equal_dec : EqualDec bool := RelInstance.
-
-Instance sigT_eq_dec A (P: A -> Prop) (dec:EqualDec A) : EqualDec (sig P).
-Proof.
-  hnf; intros.
-  destruct x as [x ?], y as [y ?].
-  destruct (equal x y); subst; [ left | right ].
-  - f_equal.
-    apply proof_irrelevance.
-  - intro.
-    inversion H; congruence.
-Qed.
-
-Class Default T := default : T.
-(* should address most instances *)
-Hint Extern 1 (Default _) => unfold Default; constructor : typeclass_instances.
-
-Instance unit_def : Default unit.
-Proof.
-  typeclasses eauto.
-Qed.
-
-Instance pair_def A B (defA: Default A) (defB: Default B)
-  : Default (A * B) := (default, default).
