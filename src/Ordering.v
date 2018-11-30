@@ -46,7 +46,7 @@ Proof.
   apply cmp_antisym; auto.
 Qed.
 
-Hint Resolve cmp_eq1 cmp_refl cmp_antisym1 cmp_antisym2 cmp_trans.
+Local Hint Resolve cmp_eq1 cmp_refl cmp_antisym1 cmp_antisym2 cmp_trans : core.
 
 Definition cmp_lt {A} `{Ordering A} :=
   fun x y => cmp x y = Lt.
