@@ -33,9 +33,6 @@ Proof.
     inversion H; congruence.
 Qed.
 
-(* TODO: this could be much more efficient if it first did all the computation
-and then produced the proof, opaquely *)
-
 Definition ascii_cmp (x y: Ascii.ascii) : bool :=
   match x, y with
   | Ascii.Ascii x0 x1 x2 x3 x4 x5 x6 x7,
@@ -50,21 +47,19 @@ Definition ascii_cmp (x y: Ascii.ascii) : bool :=
              Bool.eqb x7 y7
   end.
 
-Ltac noteq := inversion 1; congruence.
-
-Theorem eqb_spec b1 b2 : {Bool.eqb b1 b2 = true /\ b1 = b2} +
+Local Theorem eqb_spec b1 b2 : {Bool.eqb b1 b2 = true /\ b1 = b2} +
                          {Bool.eqb b1 b2 = false /\ b1 <> b2}.
 Proof.
   destruct b1, b2; simpl; auto.
   right; (intuition idtac); congruence.
 Qed.
 
-Ltac checkeq b1 b2 :=
+Local Ltac checkeq b1 b2 :=
   let Heqb := fresh "Heqb" in
   let Hb := fresh "Hb" in
   destruct (eqb_spec b1 b2) as [ (Heqb & Hb) | (Heqb & Hb) ];
   rewrite Heqb; simpl; clear Heqb;
-  [ | noteq ].
+  [ | inversion 1; congruence ].
 
 Theorem ascii_cmp_ok : forall x y,
     if ascii_cmp x y then x = y else x <> y.
