@@ -52,19 +52,33 @@ Definition ascii_cmp (x y: Ascii.ascii) : bool :=
 
 Ltac noteq := inversion 1; congruence.
 
+Theorem eqb_spec b1 b2 : {Bool.eqb b1 b2 = true /\ b1 = b2} +
+                         {Bool.eqb b1 b2 = false /\ b1 <> b2}.
+Proof.
+  destruct b1, b2; simpl; auto.
+  right; (intuition idtac); congruence.
+Qed.
+
+Ltac checkeq b1 b2 :=
+  let Heqb := fresh "Heqb" in
+  let Hb := fresh "Hb" in
+  destruct (eqb_spec b1 b2) as [ (Heqb & Hb) | (Heqb & Hb) ];
+  rewrite Heqb; simpl; clear Heqb;
+  [ | noteq ].
+
 Theorem ascii_cmp_ok : forall x y,
     if ascii_cmp x y then x = y else x <> y.
 Proof.
   destruct x as [x0 x1 x2 x3 x4 x5 x6 x7], y as [y0 y1 y2 y3 y4 y5 y6 y7];
     simpl.
-  destruct (Bool.eqb_spec x0 y0); [ | noteq ].
-  destruct (Bool.eqb_spec x1 y1); [ | noteq ].
-  destruct (Bool.eqb_spec x2 y2); [ | noteq ].
-  destruct (Bool.eqb_spec x3 y3); [ | noteq ].
-  destruct (Bool.eqb_spec x4 y4); [ | noteq ].
-  destruct (Bool.eqb_spec x5 y5); [ | noteq ].
-  destruct (Bool.eqb_spec x6 y6); [ | noteq ].
-  destruct (Bool.eqb_spec x7 y7); [ | noteq ].
+  checkeq x0 y0.
+  checkeq x1 y1.
+  checkeq x2 y2.
+  checkeq x3 y3.
+  checkeq x4 y4.
+  checkeq x5 y5.
+  checkeq x6 y6.
+  checkeq x7 y7.
   simpl; f_equal; auto.
 Qed.
 
