@@ -16,8 +16,10 @@ Instance unit_equal_dec : EqualDec unit :=
                 | tt, tt => eq_refl
                 end).
 
-Instance nat_equal_dec : EqualDec nat := ltac:(hnf; decide equality).
-Instance bool_equal_dec : EqualDec bool := ltac:(hnf; decide equality).
+Hint Extern 3 (EqualDec _) => hnf; decide equality : typeclass_instances.
+
+Instance nat_equal_dec : EqualDec nat := _.
+Instance bool_equal_dec : EqualDec bool := _.
 
 Instance sigT_eq_dec A (P: A -> Prop) (dec:EqualDec A) : EqualDec (sig P).
 Proof.
