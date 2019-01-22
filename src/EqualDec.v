@@ -95,7 +95,9 @@ Proof.
   destruct (equal a a0); auto.
 Defined.
 
-Definition inj_eq_dec {A B} {dec:EqualDec B} (f: A -> B) (f_inj: forall x y, f x = f y -> x = y) : EqualDec A.
+Definition inj_eq_dec {A} {dec:EqualDec A}
+           {B} (f: B -> A) (f_inj: forall x y, f x = f y -> x = y)
+  : EqualDec B.
 Proof.
   hnf; intros.
   destruct (equal (f x) (f y));
@@ -103,3 +105,11 @@ Proof.
   - auto.
   - now intros ->.
 Defined.
+
+Instance pair_eq_dec {A B}
+           {decA:EqualDec A} {decB:EqualDec B} : EqualDec (A * B) := _.
+
+Instance sum_eq_dec {A B}
+           {decA:EqualDec A} {decB:EqualDec B} : EqualDec (A + B) := _.
+
+Instance option_eq_dec {A} {dec:EqualDec A} : EqualDec (option A) := _.
