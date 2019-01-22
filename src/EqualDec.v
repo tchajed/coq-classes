@@ -89,3 +89,12 @@ Proof.
   hnf; decide equality.
   destruct (equal a a0); auto.
 Defined.
+
+Definition inj_eq_dec {A B} {dec:EqualDec B} (f: A -> B) (f_inj: forall x y, f x = f y -> x = y) : EqualDec A.
+Proof.
+  hnf; intros.
+  destruct (equal (f x) (f y));
+    [ left | right ].
+  - auto.
+  - now intros ->.
+Defined.
