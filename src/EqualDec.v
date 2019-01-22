@@ -1,5 +1,7 @@
 From Coq Require Import ProofIrrelevance.
 From Coq Require Import String.
+From Coq Require Import NArith.NArith.
+From Coq Require Import ZArith.ZArith.
 
 Class EqualDec A :=
   equal : forall x y : A, { x = y } + { x <> y }.
@@ -17,10 +19,13 @@ Instance unit_equal_dec : EqualDec unit :=
                 | tt, tt => eq_refl
                 end).
 
-Hint Extern 2 (EqualDec _) => hnf; decide equality : typeclass_instances.
+Hint Extern 2 (EqualDec _) => hnf; repeat (decide equality) : typeclass_instances.
 
 Instance nat_equal_dec : EqualDec nat := _.
 Instance bool_equal_dec : EqualDec bool := _.
+Instance positive_equal_dec : EqualDec positive := _.
+Instance N_equal_dec : EqualDec N := _.
+Instance Z_equal_dec : EqualDec Z := _.
 
 Instance sigT_eq_dec A (P: A -> Prop) (dec:EqualDec A) : EqualDec (sig P).
 Proof.
