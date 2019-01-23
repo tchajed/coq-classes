@@ -113,3 +113,5 @@ Instance sum_eq_dec {A B}
            {decA:EqualDec A} {decB:EqualDec B} : EqualDec (A + B) := _.
 
 Instance option_eq_dec {A} {dec:EqualDec A} : EqualDec (option A) := _.
+
+Instance list_eq_dec {A} {dec:EqualDec A} : EqualDec (list A) := _.
