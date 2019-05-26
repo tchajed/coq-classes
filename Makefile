@@ -4,7 +4,7 @@ TEST_VFILES := $(shell find 'src' -name "*Tests.v")
 PROJ_VFILES := $(shell find 'src' -name "*.v")
 VFILES := $(filter-out $(TEST_VFILES),$(PROJ_VFILES))
 
-COQARGS := -w +all -w -auto-template
+COQARGS := -w +all,-disj-pattern-notation -w -auto-template
 
 default: $(VFILES:.v=.vo)
 test: $(TEST_VFILES:.v=.vo) $(VFILES:.v=.vo)
