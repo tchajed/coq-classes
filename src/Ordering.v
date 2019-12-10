@@ -1,6 +1,6 @@
-Require Import Arith.
-Require Import Omega.
-Require Import String.
+From Coq Require Import Arith.
+From Coq Require Import Omega.
+From Coq Require Import String.
 Require List.
 
 Import List.ListNotations.
