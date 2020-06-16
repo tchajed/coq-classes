@@ -1,5 +1,5 @@
 From Coq Require Import Arith.
-From Coq Require Import Omega.
+From Coq Require Import Lia.
 From Coq Require Import String.
 Require List.
 
@@ -86,7 +86,7 @@ Proof.
       try congruence.
     split; congruence.
     destruct (lt_dec x y), (lt_dec y x);
-      try omega.
+      try lia.
     split; congruence.
     split; auto.
   - destruct (Nat.eq_dec x y), (Nat.eq_dec y z), (Nat.eq_dec x z);
@@ -94,10 +94,10 @@ Proof.
       try congruence.
     destruct (lt_dec z y), (lt_dec y z);
       try congruence;
-      try omega.
+      try lia.
     destruct (lt_dec x y), (lt_dec y z), (lt_dec x z);
       try congruence;
-      try omega.
+      try lia.
 Defined.
 
 Instance prod_Ordering A B {ordA:Ordering A} {ordB: Ordering B} : Ordering (A*B).
