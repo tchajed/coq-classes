@@ -14,6 +14,7 @@ End EqualDecNotation.
 Specifically it is syntactically a [left], so any matches on [u == u']
 automatically reduce to the true case; [decide equality] would first destruct
 the arguments before producing [left]. *)
+#[export]
 Instance unit_equal_dec : EqualDec unit :=
   fun x y => left (match x, y with
                 | tt, tt => eq_refl
@@ -22,12 +23,13 @@ Instance unit_equal_dec : EqualDec unit :=
 #[export]
 Hint Extern 2 (EqualDec _) => hnf; repeat (decide equality) : typeclass_instances.
 
-Instance nat_equal_dec : EqualDec nat := _.
-Instance bool_equal_dec : EqualDec bool := _.
-Instance positive_equal_dec : EqualDec positive := _.
-Instance N_equal_dec : EqualDec N := _.
-Instance Z_equal_dec : EqualDec Z := _.
+#[export] Instance nat_equal_dec : EqualDec nat := _.
+#[export] Instance bool_equal_dec : EqualDec bool := _.
+#[export] Instance positive_equal_dec : EqualDec positive := _.
+#[export] Instance N_equal_dec : EqualDec N := _.
+#[export] Instance Z_equal_dec : EqualDec Z := _.
 
+#[export]
 Instance sigT_eq_dec A (P: A -> Prop) (dec:EqualDec A) : EqualDec (sig P).
 Proof.
   hnf; intros.
@@ -83,6 +85,7 @@ Proof.
   simpl; f_equal; auto.
 Qed.
 
+#[export]
 Instance ascii_eq_dec : EqualDec Ascii.ascii.
 Proof.
   hnf; intros.
@@ -90,6 +93,7 @@ Proof.
   destruct (ascii_cmp x y); auto.
 Defined.
 
+#[export]
 Instance string_eq_dec : EqualDec string.
 Proof.
   hnf; decide equality.
@@ -107,12 +111,16 @@ Proof.
   - now intros ->.
 Defined.
 
+#[export]
 Instance pair_eq_dec {A B}
            {decA:EqualDec A} {decB:EqualDec B} : EqualDec (A * B) := _.
 
+#[export]
 Instance sum_eq_dec {A B}
            {decA:EqualDec A} {decB:EqualDec B} : EqualDec (A + B) := _.
 
+#[export]
 Instance option_eq_dec {A} {dec:EqualDec A} : EqualDec (option A) := _.
 
+#[export]
 Instance list_eq_dec {A} {dec:EqualDec A} : EqualDec (list A) := _.

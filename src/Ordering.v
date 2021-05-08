@@ -71,6 +71,7 @@ Proof.
     intuition eauto.
 Defined.
 
+#[export]
 Instance nat_Ordering : Ordering nat.
 Proof.
   refine {| cmp := fun x y =>
@@ -100,6 +101,7 @@ Proof.
       try lia.
 Defined.
 
+#[export]
 Instance prod_Ordering A B {ordA:Ordering A} {ordB: Ordering B} : Ordering (A*B).
 Proof.
   refine {| cmp := fun '(x1, x2) '(y1, y2) =>
@@ -139,6 +141,7 @@ Proof.
     erewrite cmp_trans; eauto.
 Defined.
 
+#[export]
 Instance sum_Ordering A B : forall (ordA:Ordering A) (ordB:Ordering B), Ordering (A+B).
 Proof.
   intros.
@@ -348,12 +351,14 @@ Proof.
     try congruence.
 Qed.
 
+#[export]
 Instance list_Ordering A {ord:Ordering A} : Ordering (list A).
 Proof.
   refine {| cmp := cmp_list ord |};
     eauto using cmp_list_eq, cmp_list_antisym, cmp_list_trans.
 Defined.
 
+#[export]
 Instance bool_Ordering : Ordering bool.
 Proof.
   refine {| cmp := fun x y =>
@@ -368,6 +373,7 @@ Proof.
   destruct x, y, z; simpl; (intuition idtac); congruence.
 Defined.
 
+#[export]
 Instance ascii_Ordering : Ordering Ascii.ascii.
 Proof.
   apply (injection_Ordering (bool*bool*bool*bool*bool*bool*bool*bool)%type).
@@ -386,6 +392,7 @@ Fixpoint string_to_list (s:string) : list Ascii.ascii :=
   | String c s => c :: string_to_list s
   end.
 
+#[export]
 Instance string_Ordering : Ordering string.
 Proof.
   apply (injection_Ordering (list Ascii.ascii)).
