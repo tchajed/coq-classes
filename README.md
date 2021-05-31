@@ -1,6 +1,6 @@
 # A few Coq typeclasses
 
-[![Build Status](https://travis-ci.com/tchajed/coq-classes.svg?branch=master)](https://travis-ci.com/tchajed/coq-classes)
+[![CI](https://github.com/tchajed/coq-classes/actions/workflows/coq-action.yml/badge.svg)](https://github.com/tchajed/coq-classes/actions/workflows/coq-action.yml)
 
 Includes the following typeclasses, as well as several instances for standard datatypes:
 - `EqualDec` for decidable equality
