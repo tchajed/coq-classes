@@ -36,7 +36,6 @@ jobs:
             startGroup "Workaround permission issue"
               sudo chown -R coq:coq .
             endGroup
-          before_script:
           script: |
             startGroup "Build project"
               make -j2 -k
