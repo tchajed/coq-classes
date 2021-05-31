@@ -32,10 +32,21 @@ jobs:
           before_install:
           install:
           after_install:
+          before_script: |
+            startGroup "Workaround permission issue"
+              sudo chown -R coq:coq .
+            endGroup
           before_script:
-          script: make -j2 -k
+          script: |
+            startGroup "Build project"
+              make -j2 -k
+            endGroup
           after_script:
           uninstall:
+      - name: Revert permissions
+        # to avoid a warning at cleanup time
+        if: ${{ always() }}
+        run: sudo chown -R 1001:116 .
 
 # See also:
 # https://github.com/coq-community/docker-coq-action#readme
