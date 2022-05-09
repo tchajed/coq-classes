@@ -19,7 +19,7 @@ Instance unit_equal_dec : EqualDec unit :=
                 | tt, tt => eq_refl
                 end).
 
-Hint Extern 2 (EqualDec _) => hnf; repeat (decide equality) : typeclass_instances.
+#[export] Hint Extern 2 (EqualDec _) => hnf; repeat (decide equality) : typeclass_instances.
 
 Instance nat_equal_dec : EqualDec nat := _.
 Instance bool_equal_dec : EqualDec bool := _.

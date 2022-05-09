@@ -1,7 +1,7 @@
 Class Default T := default : T.
 (* should address most instances *)
 Local Ltac mkDefault := unfold Default; constructor; exact default.
-Hint Extern 1 (Default _) => mkDefault : typeclass_instances.
+#[export] Hint Extern 1 (Default _) => mkDefault : typeclass_instances.
 
 Local Notation cache_default := (ltac:(mkDefault)) (only parsing).
 
