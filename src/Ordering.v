@@ -1,7 +1,7 @@
-From Coq Require Import Arith.
-From Coq Require Import Lia.
-From Coq Require Import String.
-Require List.
+From Stdlib Require Import Arith.
+From Stdlib Require Import Lia.
+From Stdlib Require Import String.
+From Stdlib Require List.
 
 Import List.ListNotations.
 Local Open Scope list.
