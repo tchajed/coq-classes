@@ -16,15 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        coq_version:
-          - "dev"
-          - "latest"
+        image:
+          - "coqorg/coq:dev"
+          - "coqorg/coq:latest"
       fail-fast: false
     steps:
       - uses: actions/checkout@v6
       - uses: coq-community/docker-coq-action@v1
         with:
-          coq_version: ${{ matrix.coq_version }}
+          custom_image: ${{ matrix.image }}
           before_install:
           install:
           after_install:
