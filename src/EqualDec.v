@@ -1,7 +1,7 @@
-From Coq Require Import ProofIrrelevance.
-From Coq Require Import String.
-From Coq Require Import NArith.NArith.
-From Coq Require Import ZArith.ZArith.
+From Stdlib Require Import ProofIrrelevance.
+From Stdlib Require Import String.
+From Stdlib Require Import NArith.
+From Stdlib Require Import ZArith.
 
 Class EqualDec A :=
   equal : forall x y : A, { x = y } + { x <> y }.

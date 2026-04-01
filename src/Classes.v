@@ -1,4 +1,4 @@
-From Coq Require Export RelationClasses.
+From Stdlib Require Export RelationClasses.
 From Classes Require Export EqualDec.
 From Classes Require Export Default.
 

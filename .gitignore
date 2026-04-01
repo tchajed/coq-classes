@@ -5,4 +5,5 @@
 .*.aux
 .coqdeps.d
 _CoqProject
+_RocqProject
 .lia.cache
