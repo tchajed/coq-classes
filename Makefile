@@ -24,7 +24,7 @@ _RocqProject: libname $(wildcard vendor/*)
 
 .coqdeps.d: $(ALL_VFILES) _RocqProject
 	@echo "COQDEP $@"
-	@coqdep -f _RocqProject $(ALL_VFILES) > $@
+	@rocq dep -f _RocqProject $(ALL_VFILES) > $@
 
 ifneq ($(MAKECMDGOALS), clean)
 -include .coqdeps.d
@@ -32,7 +32,7 @@ endif
 
 %.vo: %.v _RocqProject
 	@echo "COQC $<"
-	@coqc $(COQARGS) $(shell cat '_RocqProject') $< -o $@
+	@rocq compile $(COQARGS) $(shell cat '_RocqProject') $< -o $@
 
 clean:
 	@echo "CLEAN vo glob aux"
